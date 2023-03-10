@@ -1,0 +1,63 @@
+﻿/* 全局样式 */
+* {
+    font: 22px "楷体" ;
+    background-color: white;
+}
+
+/* 按钮样式 */
+QPushButton {
+    padding: 10px;
+    icon-size: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f2f2f4;
+    outline: none;
+}
+
+/* 按钮鼠标悬停样式 */
+QPushButton:hover {
+    background-color: #edf2ff;
+}
+
+/* 按钮选中样式 */
+QPushButton:selected {
+    background-color: rgb(228, 237, 242);
+}
+
+/* 按钮失效样式 */
+QPushButton:disabled {
+    color: black;
+}
+
+/* 最小化、最大化按钮样式 */
+#pushButton_close,
+#pushButton_min {
+    background-color: transparent;
+}
+
+/* 关闭按钮鼠标悬停样式 */
+#pushButton_close:hover {
+    background-color: red;
+}
+
+/* 最小化按钮鼠标悬停样式 */
+#pushButton_min:hover {
+    background-color: #edf2ff;
+}
+
+/* 编辑框样式 */
+QLineEdit {
+    background-color: #f2f2f4;
+    font-size: 20px;
+    color: black;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* 编辑框聚焦样式 */
+QLineEdit:focus {
+    color: blue;
+    border: 1px solid blue;
+    background-color: #edf2ff;
+}

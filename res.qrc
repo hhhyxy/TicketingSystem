@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/close.svg</file>
+        <file>image/min.svg</file>
+    </qresource>
+    <qresource prefix="/style">
+        <file>style.css</file>
+    </qresource>
+</RCC>
