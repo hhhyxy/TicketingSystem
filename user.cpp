@@ -5,10 +5,27 @@ User::User()
 
 }
 
-User::User(QString name, QString pwd)
+User::User(const QString &name, const QString &pwd, const QTime &joinTime)
 {
     m_name = name;
     m_pwd = pwd;
+    m_joinTime = joinTime;
+}
+
+User::User(int id, const QString &name, const QString &pwd, const QTime &joinTime, const int &grade, const int &score, int sex, int age, const QDate birthday, const QString mail, const QString phone) :
+    m_id(id),
+    m_name(name),
+    m_pwd(pwd),
+    m_joinTime(joinTime),
+    m_grade(grade),
+    m_score(score),
+    m_sex(sex),
+    m_age(age),
+    m_birthday(birthday),
+    m_mail(mail),
+    m_phone(phone)
+{
+
 }
 
 int User::id() const
@@ -36,12 +53,12 @@ QTime User::joinTime() const
     return m_joinTime;
 }
 
-QString User::grade() const
+int User::grade() const
 {
     return m_grade;
 }
 
-QString User::score() const
+int User::score() const
 {
     return m_score;
 }
@@ -86,16 +103,15 @@ void User::setMail(const QString &newMail)
     m_mail = newMail;
 }
 
-QString User::getPhone() const
+QString User::phone() const
 {
-    return phone;
+    return m_phone;
 }
 
 void User::setPhone(const QString &newPhone)
 {
-    phone = newPhone;
+    m_phone = newPhone;
 }
-
 
 Power::Power()
 {
@@ -155,3 +171,5 @@ void Power::setMemDiscnt(int newMemDiscnt)
 {
     m_memDiscnt = newMemDiscnt;
 }
+
+

@@ -206,10 +206,13 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget_content">
         <property name="currentIndex">
-         <number>1</number>
+         <number>3</number>
         </property>
-        <widget class="QWidget" name="page_movies"/>
-        <widget class="QWidget" name="page_detail"/>
+        <widget class="QWidget" name="page_hitFilm"/>
+        <widget class="QWidget" name="page_personalCenter"/>
+        <widget class="QWidget" name="page_filmManager"/>
+        <widget class="QWidget" name="page_userManager"/>
+        <widget class="QWidget" name="page_sales"/>
        </widget>
       </item>
      </layout>

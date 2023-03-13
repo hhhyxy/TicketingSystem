@@ -22,6 +22,16 @@ private slots:
 
     void on_pushButton_min_clicked();
 
+    void on_pushButton_movies_clicked();
+
+    void on_pushButton_personalInfo_clicked();
+
+    void on_pushButton_movieManager_clicked();
+
+    void on_pushButton_memManager_clicked();
+
+    void on_pushButton_sales_clicked();
+
 private:
     Ui::TicketingSystem *ui;
 };

@@ -71,7 +71,6 @@ private:
     QLabel *m_leftLabel = nullptr;
     QLabel *m_rightLabel = nullptr;
     QParallelAnimationGroup *m_animGroup = nullptr;
-
 };
 
 #endif // SHADOWWIDGET_H

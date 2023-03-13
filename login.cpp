@@ -40,6 +40,7 @@ void Login::on_pushButton_tourist_clicked()
 
 void Login::onLogin(int u_id)
 {
+    Q_UNUSED(u_id)
     TicketingSystem *ts = new TicketingSystem();
     ts->setAttribute(Qt::WA_DeleteOnClose);
     ts->setGeometry(253, 32, 1503, 970);

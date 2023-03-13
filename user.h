@@ -12,7 +12,8 @@ public:
         Woman
     };
     User();
-    User(QString name, QString pwd);
+    User(const QString &name, const QString &pwd, const QTime &joinTime = QTime::currentTime());
+    User(int id, const QString &name, const QString &pwd, const QTime &joinTime = QTime::currentTime(), const int &grade = 1, const int &score = 0, int sex = 0, int age = 0, const QDate birthday = QDate(), const QString mail = "", const QString phone = "");
 
     // Setter and Getter
     int id() const;
@@ -24,9 +25,9 @@ public:
 
     QTime joinTime() const;
 
-    QString grade() const;
+    int grade() const;
 
-    QString score() const;
+    int score() const;
 
     int sex() const;
     void setSex(int newSex);
@@ -40,7 +41,7 @@ public:
     QString mail() const;
     void setMail(const QString &newMail);
 
-    QString getPhone() const;
+    QString phone() const;
     void setPhone(const QString &newPhone);
 
 private:
@@ -48,13 +49,13 @@ private:
     QString m_name;     // 用户名
     QString m_pwd;      // 密码
     QTime m_joinTime;   // 注册时间
-    QString m_grade;    // 会员等级
-    QString m_score;    // 会员积分
+    int m_grade;    // 会员等级
+    int m_score;    // 会员积分
     int m_sex;          // 性别
     int m_age;          // 年龄
     QDate m_birthday;   // 生日
     QString m_mail;     // 邮箱
-    QString phone;      // 电话
+    QString m_phone;      // 电话
 };
 
 class Power

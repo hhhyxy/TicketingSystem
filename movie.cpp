@@ -12,7 +12,7 @@ Movie::Movie(int id, QString name, QString picture)
     m_picture = picture;
 }
 
-Movie::Movie(int id, QString name, QString introduce, QString picture, QStringList directors, QStringList actors, QString duration, QStringList type)
+Movie::Movie(int id, QString name, QString introduce, QString picture, QString directors, QString actors, QString duration, QString type)
 {
     m_id = id;
     m_name = name;
@@ -49,12 +49,12 @@ void Movie::setIntroduce(const QString &newIntroduce)
     m_introduce = newIntroduce;
 }
 
-QStringList Movie::actors() const
+QString Movie::actors() const
 {
     return m_actors;
 }
 
-void Movie::setActors(const QStringList &newActors)
+void Movie::setActors(const QString &newActors)
 {
     m_actors = newActors;
 }
@@ -69,12 +69,12 @@ void Movie::setDuration(const QString &newDuration)
     m_duration = newDuration;
 }
 
-QStringList Movie::type() const
+QString Movie::type() const
 {
     return m_type;
 }
 
-void Movie::setType(const QStringList &newType)
+void Movie::setType(const QString &newType)
 {
     m_type = newType;
 }
@@ -94,9 +94,108 @@ Place::Place()
 
 }
 
+Place::Place(int id, QString name, int movieId, QDate date, int price, QTime startTime, QTime endTime, int maxRow, int maxCol, QBitArray seat)
+{
+    m_id = id;
+    m_name = name;
+    m_movieId = movieId;
+    m_date = date;
+    m_price = price;
+    m_maxRow = maxRow;
+    m_maxCol = maxCol;
+    m_startTime = startTime;
+    m_endTime = endTime;
+    m_seat = seat;
+}
+
 int Place::id() const
 {
     return m_id;
+}
+
+QString Place::name() const
+{
+    return m_name;
+}
+
+void Place::setName(QString newName)
+{
+    m_name = newName;
+}
+
+QBitArray Place::seat() const
+{
+    return m_seat;
+}
+
+void Place::setSeat(const QBitArray &newSeat)
+{
+    m_seat = newSeat;
+}
+
+int Place::movieId() const
+{
+    return m_movieId;
+}
+
+QDate Place::getDate() const
+{
+    return m_date;
+}
+
+void Place::setDate(const QDate &newDate)
+{
+    m_date = newDate;
+}
+
+int Place::price() const
+{
+    return m_price;
+}
+
+void Place::setPrice(int newPrice)
+{
+    m_price = newPrice;
+}
+
+QTime Place::startTime() const
+{
+    return m_startTime;
+}
+
+void Place::setStartTime(const QTime &newStartTime)
+{
+    m_startTime = newStartTime;
+}
+
+QTime Place::endTime() const
+{
+    return m_endTime;
+}
+
+void Place::setEndTime(const QTime &newEndTime)
+{
+    m_endTime = newEndTime;
+}
+
+int Place::maxRow() const
+{
+    return m_maxRow;
+}
+
+void Place::setMaxRow(int newMaxRow)
+{
+    m_maxRow = newMaxRow;
+}
+
+int Place::maxCol() const
+{
+    return m_maxCol;
+}
+
+void Place::setMaxCol(int newMaxCol)
+{
+    m_maxCol = newMaxCol;
 }
 
 Ticket::Ticket()
@@ -104,13 +203,88 @@ Ticket::Ticket()
 
 }
 
-Ticket::Ticket(int id, int userId, int movieId, int placeId, QTime time, int row, int col)
+Ticket::Ticket(int userId, int movieId, int placeId, QTime time, int row, int col)
 {
-    m_id = id,
     m_userId = userId;
     m_movieId = movieId;
     m_placeId = placeId;
     m_time = time;
     m_row = row;
     m_col = col;
+}
+
+Ticket::Ticket(int id, int userId, int movieId, int placeId, QTime time, int row, int col)
+{
+    m_id = id;
+    m_userId = userId;
+    m_movieId = movieId;
+    m_placeId = placeId;
+    m_time = time;
+    m_row = row;
+    m_col = col;
+}
+
+int Ticket::userId() const
+{
+    return m_userId;
+}
+
+void Ticket::setUserId(int newUserId)
+{
+    m_userId = newUserId;
+}
+
+int Ticket::movieId() const
+{
+    return m_movieId;
+}
+
+void Ticket::setMovieId(int newMovieId)
+{
+    m_movieId = newMovieId;
+}
+
+int Ticket::placeId() const
+{
+    return m_placeId;
+}
+
+void Ticket::setPlaceId(int newPlaceId)
+{
+    m_placeId = newPlaceId;
+}
+
+QTime Ticket::time() const
+{
+    return m_time;
+}
+
+void Ticket::setTime(const QTime &newTime)
+{
+    m_time = newTime;
+}
+
+int Ticket::row() const
+{
+    return m_row;
+}
+
+void Ticket::setRow(int newRow)
+{
+    m_row = newRow;
+}
+
+int Ticket::col() const
+{
+    return m_col;
+}
+
+void Ticket::setCol(int newCol)
+{
+    m_col = newCol;
+}
+
+int Ticket::id() const
+{
+    return m_id;
 }

@@ -41,3 +41,33 @@ void TicketingSystem::on_pushButton_min_clicked()
     this->showMinimized();
 }
 
+// 选座购票
+void TicketingSystem::on_pushButton_movies_clicked()
+{
+    ui->stackedWidget_content->setCurrentWidget(ui->page_hitFilm);
+}
+
+// 个人中心
+void TicketingSystem::on_pushButton_personalInfo_clicked()
+{
+    ui->stackedWidget_content->setCurrentWidget(ui->page_personalCenter);
+}
+
+// 电影管理
+void TicketingSystem::on_pushButton_movieManager_clicked()
+{
+    ui->stackedWidget_content->setCurrentWidget(ui->page_filmManager);
+}
+
+// 用户管理
+void TicketingSystem::on_pushButton_memManager_clicked()
+{
+    ui->stackedWidget_content->setCurrentWidget(ui->page_userManager);
+}
+
+// 销售情况
+void TicketingSystem::on_pushButton_sales_clicked()
+{
+    ui->stackedWidget_content->setCurrentWidget(ui->page_sales);
+}
+

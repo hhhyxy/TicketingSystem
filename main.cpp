@@ -1,7 +1,6 @@
 ﻿#include "login.h"
 #include "ticketingsystem.h"
 #include "QtSingleApplication"
-#include <QtGui>
 
 int main(int argc, char *argv[])
 {
