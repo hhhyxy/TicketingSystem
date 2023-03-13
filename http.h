@@ -14,10 +14,14 @@ class Http : public QObject
 public:
     Http(QObject *parent = nullptr);
     ~Http();
+    // 获取所有正在热映的电影
     void getAllMovie();
-    void getMovieInfo(QString id);
 private:
+    // 通过电影id 获取电影信息
+    void getMovieInfo(QString id);
+    // 解析电影id
     void parseMovieId(QNetworkReply *reply);
+    // 解析电影所有信息
     void parseMovieInfo(QNetworkReply *reply);
     QNetworkAccessManager *manager;
     DBHelper *m_db;

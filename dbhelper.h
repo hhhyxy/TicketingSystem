@@ -20,6 +20,8 @@ public:
     QList<Movie> queryAllMovie();
     // 查询指定电影详情
     Movie queryMovie(int id);
+    // 插入电影
+    void insertMovie(Movie movie);
     // 查询指定电影的所有场次
     Place queryPlace(int id);
     // 更新场次信息
@@ -28,7 +30,7 @@ public:
     void insertTicket(Ticket &ticket);
     // 关闭数据库
     void close();
-    void insertMovie(Movie movie);
+
 private:
     // 禁用拷贝和移动构造函数
     Q_DISABLE_COPY_MOVE(DBHelper)

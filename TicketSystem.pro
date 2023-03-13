@@ -13,24 +13,29 @@ include(./qtsingleapplication/qtsingleapplication.pri)
 SOURCES += \
     dbhelper.cpp \
     http.cpp \
+    listwidget.cpp \
     login.cpp \
     main.cpp \
     movie.cpp \
     shadowwidget.cpp \
+    showingmovie.cpp \
     ticketingsystem.cpp \
     user.cpp
 
 HEADERS += \
     dbhelper.h \
     http.h \
+    listwidget.h \
     login.h \
     movie.h \
     shadowwidget.h \
+    showingmovie.h \
     ticketingsystem.h \
     user.h
 
 FORMS += \
     login.ui \
+    showingmovie.ui \
     ticketingsystem.ui
 
 # Default rules for deployment.

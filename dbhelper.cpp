@@ -211,6 +211,28 @@ QList<Movie> DBHelper::queryAllMovie()
     return movieList;
 }
 
+// 插入电影
+void DBHelper::insertMovie(Movie movie)
+{
+    QSqlQuery movieQuery(m_db);
+    movieQuery.prepare("INSERT INTO movie(m_id, m_name, picture, introduce, directors, actors, durations, type) VALUES (:m_id, :m_name, :picture, :introduce, :directors, :actors, :durations, :type)");
+    movieQuery.bindValue(":m_id", movie.id());
+    movieQuery.bindValue(":m_name", movie.name());
+    movieQuery.bindValue(":picture", movie.picture());
+    movieQuery.bindValue(":introduce", movie.introduce());
+    movieQuery.bindValue(":picture", movie.picture());
+    movieQuery.bindValue(":directors", movie.dirtectors());
+    movieQuery.bindValue(":actors", movie.actors());
+    movieQuery.bindValue(":durations", movie.duration());
+    movieQuery.bindValue(":type", movie.type());
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "insert error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "insert success!";
+    }
+}
+
 // 查询电影详情
 Movie DBHelper::queryMovie(int id)
 {
@@ -314,26 +336,5 @@ void DBHelper::close()
     if (m_db.isOpen()) {
         m_db.close();
         qDebug() << __FILE__ << __LINE__ << "database closed";
-    }
-}
-
-void DBHelper::insertMovie(Movie movie)
-{
-    QSqlQuery movieQuery(m_db);
-    movieQuery.prepare("INSERT INTO movie(m_id, m_name, picture, introduce, directors, actors, durations, type) VALUES (:m_id, :m_name, :picture, :introduce, :directors, :actors, :durations, :type)");
-    movieQuery.bindValue(":m_id", movie.id());
-    movieQuery.bindValue(":m_name", movie.name());
-    movieQuery.bindValue(":picture", movie.picture());
-    movieQuery.bindValue(":introduce", movie.introduce());
-    movieQuery.bindValue(":picture", movie.picture());
-    movieQuery.bindValue(":directors", movie.dirtectors());
-    movieQuery.bindValue(":actors", movie.actors());
-    movieQuery.bindValue(":durations", movie.duration());
-    movieQuery.bindValue(":type", movie.type());
-    if(!movieQuery.exec()) {
-        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
-    }
-    else {
-        qDebug() << __FILE__ << __LINE__ << "query success!";
     }
 }

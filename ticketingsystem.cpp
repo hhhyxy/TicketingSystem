@@ -16,6 +16,7 @@ TicketingSystem::TicketingSystem(QWidget *parent) :
     file.close();
     // 获取数据库实例
     m_db = DBHelper::getInstance();
+    m_db->open();
     // 隐藏按钮
     ui->pushButton_personalInfo->hide();
     ui->pushButton_memManager->hide();

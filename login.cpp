@@ -25,7 +25,7 @@ Login::Login(QWidget *parent) :
     m_db = DBHelper::getInstance();
     m_db->open();
 
-    http.getAllMovie();
+//    http.getAllMovie();
 
 }
 
@@ -37,7 +37,6 @@ void Login::showThisTip(QString tip, int y)
 Login::~Login()
 {
     delete ui;
-    m_db->close();
 }
 
 // 游客登录
