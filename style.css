@@ -4,6 +4,11 @@
     background-color: white;
 }
 
+#label_title {
+    font: 30px "楷体";
+    padding:10px;
+}
+
 /* 按钮样式 */
 QPushButton {
     padding: 10px;
@@ -29,9 +34,10 @@ QPushButton:disabled {
     color: black;
 }
 
-/* 最小化、最大化按钮样式 */
+/* 最小化、最大化、关闭按钮样式 */
 #pushButton_close,
-#pushButton_min {
+#pushButton_min,
+#pushButton_max {
     background-color: transparent;
 }
 
@@ -40,8 +46,9 @@ QPushButton:disabled {
     background-color: red;
 }
 
-/* 最小化按钮鼠标悬停样式 */
-#pushButton_min:hover {
+/* 最小化、最大化按钮鼠标悬停样式 */
+#pushButton_min:hover,
+#pushButton_max:hover {
     background-color: #edf2ff;
 }
 

@@ -2,6 +2,9 @@
     <qresource prefix="/">
         <file>image/close.svg</file>
         <file>image/min.svg</file>
+        <file>image/max.svg</file>
+        <file>image/max2normal .svg</file>
+        <file>image/TicketingSytem.svg</file>
     </qresource>
     <qresource prefix="/style">
         <file>style.css</file>

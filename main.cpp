@@ -1,15 +1,17 @@
 ﻿#include "login.h"
-#include <QApplication>
-#include "tiplabel.h"
+#include "ticketingsystem.h"
+#include "QtSingleApplication"
+#include <QtGui>
+
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QtSingleApplication  a("ticketing_system", argc, argv);
+    // 判断实例是否已经在运行
+    if (a.isRunning()) {
+//        a.sendMessage("app is running", 2000); // 两秒后激活前一个实例
+        return EXIT_SUCCESS;
+    }
     Login login;
     login.show();
-
-//    // 当登陆界面发出登录信号，显示主界面,关闭登录界面
-//    QObject::connect(&login, &Login::signIn, [=] {
-//        login.close();
-//    });
     return a.exec();
 }

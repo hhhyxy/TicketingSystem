@@ -1,10 +1,10 @@
 ﻿#include "login.h"
 #include "ui_login.h"
-#include "tiplabel.h"
 #include <QFile>
 #include <QDebug>
+#include <QTimer>
 #include <QPropertyAnimation>
-
+#include "ticketingsystem.h"
 
 Login::Login(QWidget *parent) :
     ShadowWidget(parent),
@@ -16,19 +16,14 @@ Login::Login(QWidget *parent) :
     file.open(QIODevice::ReadOnly);
     this->setStyleSheet(QString(file.readAll()));
     file.close();
-
+    // 设置主界面
+    ui->stackedWidget->setCurrentWidget(ui->page_login);
     // 设置tab键焦点切换顺序
     this->setTabOrder(ui->lineEdit_usrName, ui->lineEdit_pwd);
     this->setTabOrder(ui->lineEdit_pwd, ui->pushButton_login);
-//    this->setTabOrder(ui->pushButton_login, ui->lineEdit_usrName);
-//    this->setTabOrder(ui->pushButton_signIn, ui->lineEdit_usrName);
-
     this->setTabOrder(ui->lineEdit_register_usrName, ui->lineEdit_register_pwd);
     this->setTabOrder(ui->lineEdit_register_pwd, ui->lineEdit_register_ackPwd);
-//    this->setTabOrder(ui->lineEdit_register_ackPwd, ui->pushButton_register_signIn);
-//    this->setTabOrder(ui->pushButton_register_signIn, ui->lineEdit_register_usrName);
-
-
+    m_db.open();
 }
 
 Login::~Login()
@@ -36,63 +31,20 @@ Login::~Login()
     delete ui;
 }
 
-// 显示提示信息
-void Login::showTip(QString tip, int x, int y)
+// 游客登录
+void Login::on_pushButton_tourist_clicked()
 {
-    if (nullptr == tipLabel) {
-        tipLabel = new TipLabel(this);
-    }
-    tipLabel->move(x, y);
-    tipLabel->showTip(tip);
+//    emit loginSuccess(0);
+    onLogin(0);
 }
 
-// 页面跳转动画
-void Login::turnAnimation(int animType)
+void Login::onLogin(int u_id)
 {
-    if (group == nullptr) {
-        leftLabel = new QLabel(ui->stackedWidget);
-        leftLabel->resize(ui->page_login->size());
-        leftLabel->raise();
-
-        rightLabel = new QLabel(ui->stackedWidget);
-        rightLabel->resize(ui->page_register->size());
-        rightLabel->raise();
-
-        QPropertyAnimation *animLeft = new QPropertyAnimation(leftLabel, "geometry");
-        animLeft->setDuration(600);
-        animLeft->setStartValue(ui->page_login->geometry());
-        animLeft->setEndValue(QRect(-(ui->page_login->width()), 0, ui->page_login->width(), ui->page_login->height()));
-        animLeft->setEasingCurve(QEasingCurve::OutCubic);
-
-        QPropertyAnimation *animRight = new QPropertyAnimation(rightLabel, "geometry");
-        animRight->setDuration(600);
-        animRight->setStartValue(QRect(ui->page_register->width(), 0, 0, ui->page_register->height()));
-        animRight->setEndValue(ui->page_register->geometry());
-        animRight->setEasingCurve(QEasingCurve::OutCubic);
-
-        group = new QParallelAnimationGroup(this);
-        group->addAnimation(animLeft);
-        group->addAnimation(animRight);
-    }
-
-    leftLabel->setPixmap(ui->page_login->grab());
-    rightLabel->setPixmap(ui->page_register->grab());
-    leftLabel->show();
-    leftLabel->raise();
-    rightLabel->show();
-    rightLabel->raise();
-
-    if (AnimType::RIGHT == animType) {
-        group->setDirection(QAbstractAnimation::Forward);
-    } else {
-        group->setDirection(QAbstractAnimation::Backward);
-    }
-
-    group->start(QAbstractAnimation::KeepWhenStopped);
-    connect(group, &QParallelAnimationGroup::finished, [=] {
-        leftLabel->hide();
-        rightLabel->hide();
-    });
+    TicketingSystem *ts = new TicketingSystem();
+    ts->setAttribute(Qt::WA_DeleteOnClose);
+    ts->setGeometry(253, 32, 1503, 970);
+    ts->show();
+    this->close();
 }
 
 // 登录
@@ -105,15 +57,20 @@ void Login::on_pushButton_login_clicked()
 void Login::on_pushButton_signIn_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page_register);
-    turnAnimation();
-
+    this->siwtchingAnimation(ui->stackedWidget, ui->page_login, ui->page_register);
+    QTimer::singleShot(animTime-100, [=] {
+        ui->label_title->setText("注册");
+    });
 }
 
 // 返回登录界面
 void Login::on_pushButton_register_return_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page_login);
-    turnAnimation(AnimType::LEFT);
+    this->siwtchingAnimation(ui->stackedWidget, ui->page_login, ui->page_register, AnimDirection::Backward);
+    QTimer::singleShot(animTime-100, [=] {
+        ui->label_title->setText("登录");
+    });
 }
 
 // 注册
@@ -133,6 +90,5 @@ void Login::on_pushButton_close_clicked()
 {
     this->close();
 }
-
 
 
