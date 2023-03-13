@@ -4,6 +4,13 @@
 #include <QVariant>
 #include <QDebug>
 
+DBHelper *DBHelper::instance = new DBHelper();
+
+DBHelper *DBHelper::getInstance()
+{
+    return instance;
+}
+
 DBHelper::DBHelper(QObject *parent)
     : QObject{parent}
 {
@@ -20,17 +27,21 @@ void DBHelper::open()
         m_db = QSqlDatabase::addDatabase("QSQLITE");
         m_db.setDatabaseName("TicketingSystem.db");
     }
+    if (m_db.isOpen()) {
+        return;
+    }
     if (!m_db.open()) {
         qDebug() << __FILE__ << __LINE__ << "Error: Failed to connect database." << m_db.lastError();
     } else {
         qDebug() << __FILE__ << __LINE__ << "Succeed to connect database." ;
     }
 
+    // 建立 movie 表
     QSqlQuery query(m_db);
     QString createSql = "CREATE TABLE IF NOT EXISTS movie ("
                         "m_id INTEGER NOT NULL,"
                         "m_name TEXT,"
-                        "picture TEXT"
+                        "picture TEXT,"
                         "introduce TEXT,"
                         "directors TEXT,"
                         "actors TEXT,"
@@ -46,6 +57,7 @@ void DBHelper::open()
     }
     query.clear();
 
+    // 建立 place 表
     createSql = "CREATE TABLE IF NOT EXISTS place ("
                 "p_id INTEGER NOT NULL,"
                 "p_name TEXT"
@@ -56,7 +68,7 @@ void DBHelper::open()
                 "end_time DATE,"
                 "max_row TEXT,"
                 "max_column TEXT,"
-                "seat BLOB"
+                "seat BLOB,"
                 "PRIMARY KEY (p_id)"
               ");";
     query.prepare(createSql);
@@ -67,6 +79,7 @@ void DBHelper::open()
     }
     query.clear();
 
+    // 建立 power 表
     createSql = "CREATE TABLE IF NOT EXISTS power ("
                 "grade INTEGER NOT NULL,"
                 "min_score INTEGER,"
@@ -83,6 +96,7 @@ void DBHelper::open()
     }
     query.clear();
 
+    // 建立 ticket 表
     createSql = "CREATE TABLE IF NOT EXISTS ticket ("
                 "t_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
                 "u_id INTEGER,"
@@ -100,6 +114,7 @@ void DBHelper::open()
     }
     query.clear();
 
+    // 建立 user 表
     createSql = "CREATE TABLE IF NOT EXISTS user ("
                 "u_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
                 "u_time DATE,"
@@ -120,7 +135,7 @@ void DBHelper::open()
         qDebug() << __FILE__ << __LINE__ << "Table created!";
     }
     query.clear();
-    m_db.close();
+
 }
 
 // 根据用户名查询用户
@@ -138,10 +153,10 @@ User DBHelper::queryUser(QString &name)
     User user;
     if (movieQuery.next()) {
         int id = movieQuery.value(0).toInt();
-        QTime time = movieQuery.value(1).toTime();
+        QDateTime time = movieQuery.value(1).toDateTime();
         QString pwd = movieQuery.value(2).toString();
-        int score = movieQuery.value(3).toInt();
-        int grade = movieQuery.value(4).toInt();
+        int grade = movieQuery.value(3).toInt();
+        int score = movieQuery.value(4).toInt();
         QString mail = movieQuery.value(5).toString();
         QString phone = movieQuery.value(6).toString();
         int sex = movieQuery.value(7).toInt();
@@ -156,8 +171,8 @@ User DBHelper::queryUser(QString &name)
 void DBHelper::insertUser(User user)
 {
     QSqlQuery movieQuery(m_db);
-    movieQuery.prepare("INSERT INTO user (u_time, u_name, password, grade, score, mail, phone, sex, age, birthday) VALUE (:u_time, :u_name, :password, :grade, :score, :mail, :phone, :sex, :age, :birthday)");
-    movieQuery.bindValue("u_time", user.joinTime());
+    movieQuery.prepare("INSERT INTO user (u_time, u_name, password, grade, score, mail, phone, sex, age, birthday) VALUES (:u_time, :u_name, :password, :grade, :score, :mail, :phone, :sex, :age, :birthday)");
+    movieQuery.bindValue(":u_time", user.joinTime());
     movieQuery.bindValue(":u_name", user.name());
     movieQuery.bindValue(":password", user.pwd());
     movieQuery.bindValue(":grade", user.grade());
@@ -181,7 +196,7 @@ QList<Movie> DBHelper::queryAllMovie()
     QSqlQuery movieQuery(m_db);
     movieQuery.prepare("SELECT m_id, m_name, picture FROM movie;");
     if(!movieQuery.exec()) {
-        qDebug() << __FILE__ << __LINE__ << "query error: "<<movieQuery.lastError();
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
     }
     else {
         qDebug() << __FILE__ << __LINE__ << "query success!";
@@ -274,10 +289,10 @@ void DBHelper::updatePlace(Place &place)
 }
 
 // 插入电影票
-void DBHelper::inseartTicket(Ticket &ticket)
+void DBHelper::insertTicket(Ticket &ticket)
 {
     QSqlQuery movieQuery(m_db);
-    movieQuery.prepare("INSERT INTO ticket (u_id, m_id, p_id, t_time, row, column) VALUE (:u_id, :m_id, p_id, :t_time, :row, :column)");
+    movieQuery.prepare("INSERT INTO ticket (u_id, m_id, p_id, t_time, row, column) VALUES (:u_id, :m_id, p_id, :t_time, :row, :column)");
 
     movieQuery.bindValue(":u_id", ticket.userId());
     movieQuery.bindValue(":m_id", ticket.movieId());
@@ -296,6 +311,29 @@ void DBHelper::inseartTicket(Ticket &ticket)
 // 关闭数据库
 void DBHelper::close()
 {
-    if (m_db.isOpen())
+    if (m_db.isOpen()) {
         m_db.close();
+        qDebug() << __FILE__ << __LINE__ << "database closed";
+    }
+}
+
+void DBHelper::insertMovie(Movie movie)
+{
+    QSqlQuery movieQuery(m_db);
+    movieQuery.prepare("INSERT INTO movie(m_id, m_name, picture, introduce, directors, actors, durations, type) VALUES (:m_id, :m_name, :picture, :introduce, :directors, :actors, :durations, :type)");
+    movieQuery.bindValue(":m_id", movie.id());
+    movieQuery.bindValue(":m_name", movie.name());
+    movieQuery.bindValue(":picture", movie.picture());
+    movieQuery.bindValue(":introduce", movie.introduce());
+    movieQuery.bindValue(":picture", movie.picture());
+    movieQuery.bindValue(":directors", movie.dirtectors());
+    movieQuery.bindValue(":actors", movie.actors());
+    movieQuery.bindValue(":durations", movie.duration());
+    movieQuery.bindValue(":type", movie.type());
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
 }

@@ -5,14 +5,14 @@ User::User()
 
 }
 
-User::User(const QString &name, const QString &pwd, const QTime &joinTime)
+User::User(const QString &name, const QString &pwd, const QDateTime &joinTime)
 {
     m_name = name;
     m_pwd = pwd;
     m_joinTime = joinTime;
 }
 
-User::User(int id, const QString &name, const QString &pwd, const QTime &joinTime, const int &grade, const int &score, int sex, int age, const QDate birthday, const QString mail, const QString phone) :
+User::User(int id, const QString &name, const QString &pwd, const QDateTime &joinTime, const int &grade, const int &score, int sex, int age, const QDate birthday, const QString mail, const QString phone) :
     m_id(id),
     m_name(name),
     m_pwd(pwd),
@@ -48,7 +48,7 @@ void User::setPwd(const QString &newPwd)
     m_pwd = newPwd;
 }
 
-QTime User::joinTime() const
+QDateTime User::joinTime() const
 {
     return m_joinTime;
 }

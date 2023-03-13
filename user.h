@@ -2,6 +2,7 @@
 #define USER_H
 
 #include <QTime>
+#include <QDateTime>
 
 class User
 {
@@ -12,8 +13,8 @@ public:
         Woman
     };
     User();
-    User(const QString &name, const QString &pwd, const QTime &joinTime = QTime::currentTime());
-    User(int id, const QString &name, const QString &pwd, const QTime &joinTime = QTime::currentTime(), const int &grade = 1, const int &score = 0, int sex = 0, int age = 0, const QDate birthday = QDate(), const QString mail = "", const QString phone = "");
+    User(const QString &name, const QString &pwd, const QDateTime &joinTime = QDateTime::currentDateTime());
+    User(int id, const QString &name, const QString &pwd, const QDateTime &joinTime = QDateTime::currentDateTime(), const int &grade = 0, const int &score = 0, int sex = 0, int age = 0, const QDate birthday = QDate(), const QString mail = "", const QString phone = "");
 
     // Setter and Getter
     int id() const;
@@ -23,7 +24,7 @@ public:
     QString pwd() const;
     void setPwd(const QString &newPwd);
 
-    QTime joinTime() const;
+    QDateTime joinTime() const;
 
     int grade() const;
 
@@ -45,17 +46,17 @@ public:
     void setPhone(const QString &newPhone);
 
 private:
-    int m_id;           // 用户id
-    QString m_name;     // 用户名
-    QString m_pwd;      // 密码
-    QTime m_joinTime;   // 注册时间
-    int m_grade;    // 会员等级
-    int m_score;    // 会员积分
-    int m_sex;          // 性别
-    int m_age;          // 年龄
-    QDate m_birthday;   // 生日
-    QString m_mail;     // 邮箱
-    QString m_phone;      // 电话
+    int m_id;               // 用户id
+    QString m_name;         // 用户名
+    QString m_pwd;          // 密码
+    QDateTime m_joinTime;   // 注册时间
+    int m_grade;            // 会员等级
+    int m_score;            // 会员积分
+    int m_sex;              // 性别
+    int m_age;              // 年龄
+    QDate m_birthday;       // 生日
+    QString m_mail;         // 邮箱
+    QString m_phone;        // 电话
 };
 
 class Power

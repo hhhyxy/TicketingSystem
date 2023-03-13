@@ -89,6 +89,16 @@ void Movie::setPicture(const QString &newPicture)
     m_picture = newPicture;
 }
 
+QString Movie::dirtectors() const
+{
+    return m_dirtectors;
+}
+
+void Movie::setDirtectors(const QString &newDirtectors)
+{
+    m_dirtectors = newDirtectors;
+}
+
 Place::Place()
 {
 

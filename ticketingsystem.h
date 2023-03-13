@@ -2,6 +2,7 @@
 #define TICKETINGSYSTEM_H
 
 #include "shadowwidget.h"
+#include "dbhelper.h"
 
 namespace Ui {
 class TicketingSystem;
@@ -13,6 +14,7 @@ class TicketingSystem : public ShadowWidget
 
 public:
     explicit TicketingSystem(QWidget *parent = nullptr);
+    void login();
     ~TicketingSystem();
 
 private slots:
@@ -34,6 +36,7 @@ private slots:
 
 private:
     Ui::TicketingSystem *ui;
+    DBHelper *m_db;
 };
 
 #endif // TICKETINGSYSTEM_H

@@ -4,6 +4,7 @@
 #include <shadowwidget.h>
 #include <QParallelAnimationGroup>
 #include "dbhelper.h"
+#include "http.h"
 
 namespace Ui {
 class Login;
@@ -19,9 +20,12 @@ public:
         RIGHT
     };
     explicit Login(QWidget *parent = nullptr);
+    void showThisTip(QString tip, int y = 250);
     ~Login();
 signals:
-    void loginSuccess(int u_id);
+    void loginSuccess(User user);
+    void touristVisit();
+
 private slots:
     void on_pushButton_login_clicked();
     void on_pushButton_signIn_clicked();
@@ -31,11 +35,10 @@ private slots:
     void on_pushButton_register_signIn_clicked();
     void on_pushButton_tourist_clicked();
 
-    void onLogin(int u_id);
-
 private:
     Ui::Login *ui;
-    DBHelper m_db;
+    DBHelper *m_db;
+    Http http;
 
 };
 

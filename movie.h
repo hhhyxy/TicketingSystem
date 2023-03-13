@@ -44,15 +44,18 @@ public:
     QString picture() const;
     void setPicture(const QString &newPicture);
 
+    QString dirtectors() const;
+    void setDirtectors(const QString &newDirtectors);
+
 private:
     int m_id;                       // 电影id
     QString m_name;                 // 电影名称
     QString m_introduce;            // 电影简介
     QString m_picture;              // 电影海报
-    QString m_dirtectors;       // 导演
-    QString m_actors;           // 主演
+    QString m_dirtectors;           // 导演
+    QString m_actors;               // 主演
     QString m_duration;             // 电影时长
-    QString m_type;             // 电影类型
+    QString m_type;                 // 电影类型
 
 };
 
@@ -90,16 +93,16 @@ public:
     void setMaxCol(int newMaxCol);
 
 private:
-    int m_id;           // 场次id
+    int m_id;               // 场次id
     QString m_name;         // 场地名称
-    int m_movieId;      // 电影id
-    QDate m_date;         // 日期
-    int m_price;        // 价格
-    QTime m_startTime;  // 开场时间
-    QTime m_endTime;    // 结束时间
-    int m_maxRow;       // 最大行
-    int m_maxCol;       // 最大列
-    QBitArray m_seat;      // 座位
+    int m_movieId;          // 电影id
+    QDate m_date;           // 日期
+    int m_price;            // 价格
+    QTime m_startTime;      // 开场时间
+    QTime m_endTime;        // 结束时间
+    int m_maxRow;           // 最大行
+    int m_maxCol;           // 最大列
+    QBitArray m_seat;       // 座位
 
 };
 

@@ -8,7 +8,8 @@ class DBHelper : public QObject
 {
     Q_OBJECT
 public:
-    explicit DBHelper(QObject *parent = nullptr);
+    // 获取数据库实例
+    static DBHelper *getInstance();
     // 打开数据库
     void open();
     // 根据用户名查询用户信息
@@ -24,10 +25,15 @@ public:
     // 更新场次信息
     void updatePlace(Place &place);
     // 插入电影票
-    void inseartTicket(Ticket &ticket);
+    void insertTicket(Ticket &ticket);
     // 关闭数据库
     void close();
+    void insertMovie(Movie movie);
 private:
+    // 禁用拷贝和移动构造函数
+    Q_DISABLE_COPY_MOVE(DBHelper)
+    explicit DBHelper(QObject *parent = nullptr);
+    static DBHelper *instance;
     QSqlDatabase m_db;
 };
 

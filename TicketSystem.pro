@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql network
 
 CONFIG += c++17
 
@@ -12,6 +12,7 @@ CONFIG += c++17
 include(./qtsingleapplication/qtsingleapplication.pri)
 SOURCES += \
     dbhelper.cpp \
+    http.cpp \
     login.cpp \
     main.cpp \
     movie.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     dbhelper.h \
+    http.h \
     login.h \
     movie.h \
     shadowwidget.h \
