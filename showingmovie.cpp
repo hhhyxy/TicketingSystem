@@ -8,9 +8,11 @@ ShowingMovie::ShowingMovie(QWidget *parent) :
     ui->setupUi(this);
     m_db = DBHelper::getInstance();
     m_db->open();
+    // 查询所有电影
     QList<Movie> movieList = m_db->queryAllMovie();
+    // 显示电影图片和名称
     foreach (Movie movie, movieList) {
-        ui->listWidget_movieList->addPicture(movie.picture(), movie.name());
+        ui->listWidget_movieList->addPicture(movie);
     }
 }
 
@@ -18,3 +20,13 @@ ShowingMovie::~ShowingMovie()
 {
     delete ui;
 }
+
+// 列表点击时间
+void ShowingMovie::on_listWidget_movieList_itemClicked(QListWidgetItem *item)
+{
+    // 获取点击的电影的id
+    int id = item->data(Qt::UserRole).toInt();
+    // 切换到详情界面
+    this->setCurrentWidget(ui->page_details);
+}
+

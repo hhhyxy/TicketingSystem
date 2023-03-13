@@ -12,17 +12,17 @@ ListWidget::ListWidget(QWidget *parent)
     this->setSpacing(80);
 }
 
-void ListWidget::addPicture(QString url, QString name)
+void ListWidget::addPicture(Movie movie)
 {
     QNetworkRequest request;
-    request.setUrl(url);
+    request.setUrl(movie.picture());
     QNetworkReply *reply = manager->get(request);
     connect(reply, &QNetworkReply::finished, [=] {
-        showPicture(reply, name);
+        showPicture(reply, movie);
     });
 }
 
-void ListWidget::showPicture(QNetworkReply *reply, QString name)
+void ListWidget::showPicture(QNetworkReply *reply, Movie movie)
 {
     // 状态码
     int status_code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -34,7 +34,8 @@ void ListWidget::showPicture(QNetworkReply *reply, QString name)
         QByteArray bytes = reply->readAll();
         QPixmap img;
         img.loadFromData(bytes);
-        QListWidgetItem *item = new QListWidgetItem(QIcon(img.scaled(200, 300)), name);
+        QListWidgetItem *item = new QListWidgetItem(QIcon(img.scaled(200, 300)), movie.name());
+        item->setData(Qt::UserRole, movie.id());
         item->setSizeHint(QSize(200,330));
         this->addItem(item);
     }

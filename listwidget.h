@@ -1,6 +1,7 @@
 ﻿#ifndef LISTWIDGET_H
 #define LISTWIDGET_H
 
+#include "movie.h"
 #include <QListWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -11,9 +12,9 @@ class ListWidget : public QListWidget
     Q_OBJECT
 public:
     explicit ListWidget(QWidget *parent = nullptr);
-    void addPicture(QString url, QString name);
+    void addPicture(Movie movie);
 private:
-    void showPicture(QNetworkReply *reply, QString name);
+    void showPicture(QNetworkReply *reply, Movie movie);
 private:
 
     QNetworkAccessManager *manager;

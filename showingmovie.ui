@@ -45,6 +45,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QWidget" name="page_details"/>
  </widget>
  <customwidgets>
   <customwidget>

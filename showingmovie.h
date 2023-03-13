@@ -3,6 +3,8 @@
 
 #include <QStackedWidget>
 #include "dbhelper.h"
+#include <QListWidgetItem>
+
 namespace Ui {
 class ShowingMovie;
 }
@@ -14,6 +16,9 @@ class ShowingMovie : public QStackedWidget
 public:
     explicit ShowingMovie(QWidget *parent = nullptr);
     ~ShowingMovie();
+
+private slots:
+    void on_listWidget_movieList_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::ShowingMovie *ui;
