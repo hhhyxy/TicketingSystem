@@ -18,6 +18,21 @@
   </property>
   <widget class="QWidget" name="page_movieList">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>8</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="ListWidget" name="listWidget_movieList">
       <property name="verticalScrollBarPolicy">
@@ -41,11 +56,28 @@
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
       </property>
+      <property name="itemAlignment">
+       <set>Qt::AlignHCenter</set>
+      </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="page_details"/>
+  <widget class="QWidget" name="page_details">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>131</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>电影详情</string>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>

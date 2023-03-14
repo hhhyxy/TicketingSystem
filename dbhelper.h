@@ -16,6 +16,8 @@ public:
     User queryUser(QString &name);
     // 插入用户
     void insertUser(User user);
+    // 更新用户信息
+    void updateUser(User user);
     // 查询电影列表（电影id，名称，海报）
     QList<Movie> queryAllMovie();
     // 查询指定电影详情

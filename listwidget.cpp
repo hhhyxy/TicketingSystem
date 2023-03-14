@@ -1,15 +1,19 @@
 ﻿#include "listwidget.h"
 #include <QPixmap>
 #include <QIcon>
+#include <QScrollBar>
+
 ListWidget::ListWidget(QWidget *parent)
     : QListWidget{parent}
 {
     manager = new QNetworkAccessManager(this);
-    this->setIconSize(QSize(200, 330));
+    this->setIconSize(QSize(200, 350));
+    this->setSpacing(30);
+
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setViewMode(QListView::IconMode);
-
-    this->setSpacing(80);
+    this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    this->verticalScrollBar()->setSingleStep(20);
 }
 
 void ListWidget::addPicture(Movie movie)
@@ -36,7 +40,8 @@ void ListWidget::showPicture(QNetworkReply *reply, Movie movie)
         img.loadFromData(bytes);
         QListWidgetItem *item = new QListWidgetItem(QIcon(img.scaled(200, 300)), movie.name());
         item->setData(Qt::UserRole, movie.id());
-        item->setSizeHint(QSize(200,330));
+        item->setToolTip(movie.name());
+        item->setSizeHint(QSize(200,350));
         this->addItem(item);
     }
     else

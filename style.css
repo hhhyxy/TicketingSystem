@@ -68,3 +68,7 @@ QLineEdit:focus {
     border: 1px solid blue;
     background-color: #edf2ff;
 }
+
+QListWidget {
+    border:none;
+}

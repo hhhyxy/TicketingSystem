@@ -46,17 +46,17 @@ public:
     void setPhone(const QString &newPhone);
 
 private:
-    int m_id;               // 用户id
-    QString m_name;         // 用户名
-    QString m_pwd;          // 密码
+    int m_id = 0;               // 用户id
+    QString m_name = "";         // 用户名
+    QString m_pwd = "";          // 密码
     QDateTime m_joinTime;   // 注册时间
-    int m_grade;            // 会员等级
-    int m_score;            // 会员积分
-    int m_sex;              // 性别
-    int m_age;              // 年龄
+    int m_grade = 0;            // 会员等级
+    int m_score = 0;            // 会员积分
+    int m_sex = 0;              // 性别
+    int m_age = 0;              // 年龄
     QDate m_birthday;       // 生日
-    QString m_mail;         // 邮箱
-    QString m_phone;        // 电话
+    QString m_mail = "";         // 邮箱
+    QString m_phone = "";        // 电话
 };
 
 class Power

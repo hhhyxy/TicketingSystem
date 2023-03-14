@@ -18,6 +18,7 @@ TicketingSystem::TicketingSystem(QWidget *parent) :
     m_db = DBHelper::getInstance();
     m_db->open();
     // 隐藏按钮
+    ui->widget_sideBar->hide();
     ui->pushButton_personalInfo->hide();
     ui->pushButton_memManager->hide();
     ui->pushButton_movieManager->hide();
@@ -31,13 +32,16 @@ void TicketingSystem::login()
     login->setAttribute(Qt::WA_DeleteOnClose);
     // 更加返回的loginSuccess信号，判断用户权限
     connect(login, &Login::loginSuccess, [=](User user) {
+        this->user = user;
         // 根据用户权限，显示不同功能
        if (user.grade() == 0) {
+           ui->widget_sideBar->show();
            ui->pushButton_personalInfo->show();
            ui->pushButton_memManager->show();
            ui->pushButton_movieManager->show();
            ui->pushButton_sales->show();
        } else if (user.grade() > 0) {
+           ui->widget_sideBar->show();
            ui->pushButton_personalInfo->show();
        }
        this->show();
@@ -84,6 +88,7 @@ void TicketingSystem::on_pushButton_movies_clicked()
 // 个人中心
 void TicketingSystem::on_pushButton_personalInfo_clicked()
 {
+    ui->widget_personalInfo->showUserInfo(user);
     ui->stackedWidget_content->setCurrentWidget(ui->page_personalCenter);
 }
 

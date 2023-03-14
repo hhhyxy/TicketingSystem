@@ -37,6 +37,7 @@ private slots:
 private:
     Ui::TicketingSystem *ui;
     DBHelper *m_db;
+    User user;
 };
 
 #endif // TICKETINGSYSTEM_H

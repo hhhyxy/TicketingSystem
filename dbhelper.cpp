@@ -190,6 +190,25 @@ void DBHelper::insertUser(User user)
     }
 }
 
+void DBHelper::updateUser(User user)
+{
+    QSqlQuery movieQuery(m_db);
+    movieQuery.prepare("UPDATE user SET password = :password, mail = :mail, phone = :phone, sex = :sex, age = :age, birthday = :birthday WHERE u_id = :u_id");
+    movieQuery.bindValue(":password", user.pwd());
+    movieQuery.bindValue(":mail", user.mail());
+    movieQuery.bindValue(":phone", user.phone());
+    movieQuery.bindValue(":sex", user.sex());
+    movieQuery.bindValue(":age", user.age());
+    movieQuery.bindValue(":birthday", user.birthday());
+    movieQuery.bindValue(":u_id", user.id());
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "update error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "update success!";
+    }
+}
+
 // 查询电影列表（电影id，名称，海报）
 QList<Movie> DBHelper::queryAllMovie()
 {
