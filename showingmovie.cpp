@@ -7,7 +7,6 @@ ShowingMovie::ShowingMovie(QWidget *parent) :
 {
     ui->setupUi(this);
     m_db = DBHelper::getInstance();
-    m_db->open();
     // 查询所有电影
     QList<Movie> movieList = m_db->queryAllMovie();
     // 显示电影图片和名称

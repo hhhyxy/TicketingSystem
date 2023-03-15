@@ -206,7 +206,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget_content">
         <property name="currentIndex">
-         <number>4</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page_hitFilm">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -291,8 +291,8 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="page_filmManager"/>
-        <widget class="QWidget" name="page_userManager"/>
+        <widget class="FilmManager" name="page_filmManager"/>
+        <widget class="MemberManager" name="page_userManager"/>
         <widget class="QWidget" name="page_sales">
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item alignment="Qt::AlignHCenter">
@@ -337,6 +337,18 @@
    <class>SaleStatus</class>
    <extends>QWidget</extends>
    <header location="global">salestatus.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MemberManager</class>
+   <extends>QWidget</extends>
+   <header location="global">membermanager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FilmManager</class>
+   <extends>QWidget</extends>
+   <header location="global">filmmanager.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

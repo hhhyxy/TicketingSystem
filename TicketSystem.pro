@@ -12,10 +12,12 @@ CONFIG += c++17
 include(./qtsingleapplication/qtsingleapplication.pri)
 SOURCES += \
     dbhelper.cpp \
+    filmmanager.cpp \
     http.cpp \
     listwidget.cpp \
     login.cpp \
     main.cpp \
+    membermanager.cpp \
     movie.cpp \
     personalinfo.cpp \
     salestatus.cpp \
@@ -26,9 +28,11 @@ SOURCES += \
 
 HEADERS += \
     dbhelper.h \
+    filmmanager.h \
     http.h \
     listwidget.h \
     login.h \
+    membermanager.h \
     movie.h \
     personalinfo.h \
     salestatus.h \
@@ -38,7 +42,9 @@ HEADERS += \
     user.h
 
 FORMS += \
+    filmmanager.ui \
     login.ui \
+    membermanager.ui \
     personalinfo.ui \
     salestatus.ui \
     showingmovie.ui \

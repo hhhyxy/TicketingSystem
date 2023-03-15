@@ -14,10 +14,13 @@ public:
     void open();
     // 根据用户名查询用户信息
     User queryUser(QString &name);
+    // 查询所有用户信息
+    QList<User> queryAllUser();
     // 插入用户
     void insertUser(User user);
     // 更新用户信息
     void updateUser(User user);
+    QList<Power> queryPower();
     // 查询电影列表（电影id，名称，海报）
     QList<Movie> queryAllMovie();
     // 查询指定电影详情
@@ -25,7 +28,7 @@ public:
     // 插入电影
     void insertMovie(Movie movie);
     // 查询指定电影的所有场次
-    Place queryPlace(int id);
+    QList<Place> queryPlace(int id);
     // 更新场次信息
     void updatePlace(Place &place);
     // 插入电影票

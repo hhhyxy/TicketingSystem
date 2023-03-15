@@ -23,9 +23,8 @@ Login::Login(QWidget *parent) :
     this->setTabOrder(ui->lineEdit_register_pwd, ui->lineEdit_register_ackPwd);
     // 在密码编辑框按确认登录
     connect(ui->lineEdit_pwd, &QLineEdit::returnPressed, this, &Login::on_pushButton_login_clicked);
-    // 获取、打开数据库
+    // 获取数据库
     m_db = DBHelper::getInstance();
-    m_db->open();
 }
 
 void Login::showThisTip(QString tip, int y)

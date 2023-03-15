@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QDebug>
 
+
 DBHelper *DBHelper::instance = new DBHelper();
 
 DBHelper *DBHelper::getInstance()
@@ -169,6 +170,35 @@ User DBHelper::queryUser(QString &name)
     return user;
 }
 
+// 查询所有用户信息
+QList<User> DBHelper::queryAllUser()
+{
+    QSqlQuery movieQuery(m_db);
+    movieQuery.prepare("SELECT u_id, u_name, u_time, password, grade, score, mail, phone, sex, age, birthday FROM user");
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+    QList<User> userList;
+    while (movieQuery.next()) {
+        int id = movieQuery.value(0).toInt();
+        QString name = movieQuery.value(1).toString();
+        QDateTime time = QDateTime::fromString(movieQuery.value(2).toString(), "yyyy-MM-dd hh:mm:ss");
+        QString pwd = movieQuery.value(3).toString();
+        int grade = movieQuery.value(4).toInt();
+        int score = movieQuery.value(5).toInt();
+        QString mail = movieQuery.value(6).toString();
+        QString phone = movieQuery.value(7).toString();
+        int sex = movieQuery.value(8).toInt();
+        int age = movieQuery.value(9).toInt();
+        QDate birthday = QDate::fromString(movieQuery.value(9).toString(), "yyyy-MM-dd");
+        userList.push_back(User(id, name, pwd, time, grade, score, sex, age, birthday, mail, phone));
+    }
+    return userList;
+}
+
 // 插入用户
 void DBHelper::insertUser(User user)
 {
@@ -282,7 +312,7 @@ Movie DBHelper::queryMovie(int id)
 }
 
 // 查询指定电影的场次信息
-Place DBHelper::queryPlace(int id)
+QList<Place> DBHelper::queryPlace(int id)
 {
     QSqlQuery movieQuery(m_db);
     movieQuery.prepare("SELECT p_id, p_name, m_name, date, price, start_time, end_time, max_row, max_column, seat FROM place WHERE m_id = :m_id;");
@@ -293,8 +323,8 @@ Place DBHelper::queryPlace(int id)
     else {
         qDebug() << __FILE__ << __LINE__ << "query success!";
     }
-    Place place;
-    if (movieQuery.next()) {
+    QList<Place> placeList;
+    while (movieQuery.next()) {
         int p_id = movieQuery.value(0).toInt();
         QString name = movieQuery.value(1).toString();
         QString movieName = movieQuery.value(2).toString();
@@ -305,9 +335,9 @@ Place DBHelper::queryPlace(int id)
         int maxRow = movieQuery.value(7).toInt();
         int maxCol = movieQuery.value(8).toInt();
         QBitArray seat = movieQuery.value(9).toBitArray();
-        place = Place(p_id, name, id, movieName, date, price, startTime, endTime, maxRow, maxCol, seat);
+        placeList.push_back(Place(p_id, name, id, movieName, date, price, startTime, endTime, maxRow, maxCol, seat));
     }
-    return place;
+    return placeList;
 }
 
 // 更新场次信息
