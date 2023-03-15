@@ -202,7 +202,7 @@ void DBHelper::updateUser(User user)
     movieQuery.bindValue(":phone", user.phone());
     movieQuery.bindValue(":sex", user.sex());
     movieQuery.bindValue(":age", user.age());
-    movieQuery.bindValue(":birthday", user.birthday());
+    movieQuery.bindValue(":birthday", user.birthday().toString("yyyy-MM-dd"));
     movieQuery.bindValue(":u_id", user.id());
     if(!movieQuery.exec()) {
         qDebug() << __FILE__ << __LINE__ << "update error: " << movieQuery.lastError();
