@@ -18,6 +18,7 @@ SOURCES += \
     main.cpp \
     movie.cpp \
     personalinfo.cpp \
+    salestatus.cpp \
     shadowwidget.cpp \
     showingmovie.cpp \
     ticketingsystem.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     login.h \
     movie.h \
     personalinfo.h \
+    salestatus.h \
     shadowwidget.h \
     showingmovie.h \
     ticketingsystem.h \
@@ -38,6 +40,7 @@ HEADERS += \
 FORMS += \
     login.ui \
     personalinfo.ui \
+    salestatus.ui \
     showingmovie.ui \
     ticketingsystem.ui
 

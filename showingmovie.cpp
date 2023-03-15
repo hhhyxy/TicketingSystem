@@ -26,6 +26,7 @@ void ShowingMovie::on_listWidget_movieList_itemClicked(QListWidgetItem *item)
 {
     // 获取点击的电影的id
     int id = item->data(Qt::UserRole).toInt();
+    qDebug()<<id;
     // 通过id获取电影详情
     Movie movie = m_db->queryMovie(id);
     // 切换到详情界面

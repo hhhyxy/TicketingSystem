@@ -17,12 +17,14 @@ TicketingSystem::TicketingSystem(QWidget *parent) :
     // 获取数据库实例
     m_db = DBHelper::getInstance();
     m_db->open();
-    // 隐藏按钮
+    // 隐藏控件
     ui->widget_sideBar->hide();
     ui->pushButton_personalInfo->hide();
     ui->pushButton_memManager->hide();
     ui->pushButton_movieManager->hide();
     ui->pushButton_sales->hide();
+    // 设置开始页面
+    ui->stackedWidget_content->setCurrentWidget(ui->page_hitFilm);
 }
 
 void TicketingSystem::login()
@@ -107,6 +109,11 @@ void TicketingSystem::on_pushButton_memManager_clicked()
 // 销售情况
 void TicketingSystem::on_pushButton_sales_clicked()
 {
+    static bool isLoaded = false;
     ui->stackedWidget_content->setCurrentWidget(ui->page_sales);
+    if (!isLoaded) {
+        ui->widget_sales->init();
+        isLoaded = true;
+    }
 }
 

@@ -19,14 +19,13 @@ Login::Login(QWidget *parent) :
     ui->stackedWidget->setCurrentWidget(ui->page_login);
     // 设置tab键焦点切换顺序
     this->setTabOrder(ui->lineEdit_usrName, ui->lineEdit_pwd);
-    this->setTabOrder(ui->lineEdit_pwd, ui->pushButton_login);
     this->setTabOrder(ui->lineEdit_register_usrName, ui->lineEdit_register_pwd);
     this->setTabOrder(ui->lineEdit_register_pwd, ui->lineEdit_register_ackPwd);
+    // 在密码编辑框按确认登录
+    connect(ui->lineEdit_pwd, &QLineEdit::returnPressed, this, &Login::on_pushButton_login_clicked);
+    // 获取、打开数据库
     m_db = DBHelper::getInstance();
     m_db->open();
-
-//    http.getAllMovie();
-
 }
 
 void Login::showThisTip(QString tip, int y)

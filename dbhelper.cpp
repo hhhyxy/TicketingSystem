@@ -60,8 +60,9 @@ void DBHelper::open()
     // 建立 place 表
     createSql = "CREATE TABLE IF NOT EXISTS place ("
                 "p_id INTEGER NOT NULL,"
-                "p_name TEXT"
+                "p_name TEXT,"
                 "m_id INTEGER,"
+                "m_name TEXT,"
                 "date DATE,"
                 "price NUMBER,"
                 "start_time DATE,"
@@ -101,6 +102,7 @@ void DBHelper::open()
                 "t_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
                 "u_id INTEGER,"
                 "m_id INTEGER,"
+                "m_name TEXT,"
                 "p_id INTEGER,"
                 "t_time DATE,"
                 "row TEXT,"
@@ -153,7 +155,7 @@ User DBHelper::queryUser(QString &name)
     User user;
     if (movieQuery.next()) {
         int id = movieQuery.value(0).toInt();
-        QDateTime time = movieQuery.value(1).toDateTime();
+        QDateTime time = QDateTime::fromString(movieQuery.value(1).toString(), "yyyy-MM-dd hh:mm:ss");
         QString pwd = movieQuery.value(2).toString();
         int grade = movieQuery.value(3).toInt();
         int score = movieQuery.value(4).toInt();
@@ -161,7 +163,7 @@ User DBHelper::queryUser(QString &name)
         QString phone = movieQuery.value(6).toString();
         int sex = movieQuery.value(7).toInt();
         int age = movieQuery.value(8).toInt();
-        QDate birthday = movieQuery.value(9).toDate();
+        QDate birthday = QDate::fromString(movieQuery.value(9).toString(), "yyyy-MM-dd");
         user = User(id, name, pwd, time, grade, score, sex, age, birthday, mail, phone);
     }
     return user;
@@ -190,6 +192,7 @@ void DBHelper::insertUser(User user)
     }
 }
 
+// 更新用户
 void DBHelper::updateUser(User user)
 {
     QSqlQuery movieQuery(m_db);
@@ -282,7 +285,7 @@ Movie DBHelper::queryMovie(int id)
 Place DBHelper::queryPlace(int id)
 {
     QSqlQuery movieQuery(m_db);
-    movieQuery.prepare("SELECT p_id, p_name, date, price, start_time, end_time, max_row, max_column, seat FROM place WHERE m_id = :m_id;");
+    movieQuery.prepare("SELECT p_id, p_name, m_name, date, price, start_time, end_time, max_row, max_column, seat FROM place WHERE m_id = :m_id;");
     movieQuery.bindValue(":m_id", id);
     if(!movieQuery.exec()) {
         qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
@@ -294,14 +297,15 @@ Place DBHelper::queryPlace(int id)
     if (movieQuery.next()) {
         int p_id = movieQuery.value(0).toInt();
         QString name = movieQuery.value(1).toString();
-        QDate date = movieQuery.value(2).toDate();
-        int price = movieQuery.value(3).toInt();
-        QTime startTime = movieQuery.value(4).toTime();
-        QTime endTime = movieQuery.value(5).toTime();
-        int maxRow = movieQuery.value(6).toInt();
-        int maxCol = movieQuery.value(7).toInt();
-        QBitArray seat = movieQuery.value(8).toBitArray();
-        place = Place(p_id, name, id, date, price, startTime, endTime, maxRow, maxCol, seat);
+        QString movieName = movieQuery.value(2).toString();
+        QDate date = QDate::fromString(movieQuery.value(3).toString(), "yyyy-MM-dd");
+        int price = movieQuery.value(4).toInt();
+        QTime startTime = QTime::fromString(movieQuery.value(5).toString(), "hh:mm:ss");
+        QTime endTime = QTime::fromString(movieQuery.value(6).toString(), "hh:mm:ss");
+        int maxRow = movieQuery.value(7).toInt();
+        int maxCol = movieQuery.value(8).toInt();
+        QBitArray seat = movieQuery.value(9).toBitArray();
+        place = Place(p_id, name, id, movieName, date, price, startTime, endTime, maxRow, maxCol, seat);
     }
     return place;
 }
@@ -310,13 +314,14 @@ Place DBHelper::queryPlace(int id)
 void DBHelper::updatePlace(Place &place)
 {
     QSqlQuery movieQuery(m_db);
-    movieQuery.prepare("UPDATE place SET p_name = :p_name, m_id = :m_id, date = :date, price = :price, start_time = :start_time, end_time = :end_time, max_row = :max_row, max_column = :max_column, seat = :seat WHERE p_id = :p_id");
+    movieQuery.prepare("UPDATE place SET p_name = :p_name, m_id = :m_id, m_name = :m_name, date = :date, price = :price, start_time = :start_time, end_time = :end_time, max_row = :max_row, max_column = :max_column, seat = :seat WHERE p_id = :p_id");
     movieQuery.bindValue(":p_name", place.name());
     movieQuery.bindValue(":m_id", place.movieId());
+    movieQuery.bindValue("m_name", place.movieName());
     movieQuery.bindValue(":date", place.getDate());
     movieQuery.bindValue(":price", place.price());
-    movieQuery.bindValue(":start_time", place.startTime());
-    movieQuery.bindValue(":end_time", place.endTime());
+    movieQuery.bindValue(":start_time", place.startTime().toString("hh:mm"));
+    movieQuery.bindValue(":end_time", place.endTime().toString("hh:mm"));
     movieQuery.bindValue(":max_row", place.maxRow());
     movieQuery.bindValue(":max_column", place.maxCol());
     movieQuery.bindValue(":seat", place.seat());
@@ -333,12 +338,12 @@ void DBHelper::updatePlace(Place &place)
 void DBHelper::insertTicket(Ticket &ticket)
 {
     QSqlQuery movieQuery(m_db);
-    movieQuery.prepare("INSERT INTO ticket (u_id, m_id, p_id, t_time, row, column) VALUES (:u_id, :m_id, p_id, :t_time, :row, :column)");
-
+    movieQuery.prepare("INSERT INTO ticket (u_id, m_id, m_name, p_id, t_time, row, column) VALUES (:u_id, :m_id, :m_name, :p_id, :t_time, :row, :column)");
     movieQuery.bindValue(":u_id", ticket.userId());
     movieQuery.bindValue(":m_id", ticket.movieId());
+    movieQuery.bindValue(":m_name", ticket.movieName());
     movieQuery.bindValue(":p_id", ticket.placeId());
-    movieQuery.bindValue(":t_time", ticket.time());
+    movieQuery.bindValue(":t_time", ticket.time().toString("yyyy-MM-dd"));
     movieQuery.bindValue(":row", ticket.row());
     movieQuery.bindValue(":column", ticket.col());
     if(!movieQuery.exec()) {
@@ -347,6 +352,192 @@ void DBHelper::insertTicket(Ticket &ticket)
     else {
         qDebug() << __FILE__ << __LINE__ << "insert success!";
     }
+}
+
+// 查询电影票数量
+int DBHelper::queryTicketNumber()
+{
+    QSqlQuery movieQuery(m_db);
+    movieQuery.prepare("SELECT count(*) FROM ticket");
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+    if (movieQuery.next()) {
+        return movieQuery.value(0).toInt();
+    }
+    return 0;
+}
+
+// 查询所有电影售卖日期
+QList<QDate> DBHelper::queryPlaceForDate()
+{
+    QSqlQuery movieQuery(m_db);
+    movieQuery.prepare("SELECT DISTINCT date FROM place");
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+    QList<QDate> dateList;
+    if (movieQuery.next()) {
+        QString date = movieQuery.value(0).toString();
+        dateList.push_back(QDate::fromString(date, "yyyy-MM-dd"));
+    }
+    return dateList;
+}
+
+// 查询指定日期电影票
+QList<QStringList> DBHelper::querySalesByDate(QDate date)
+{
+    QSqlQuery movieQuery(m_db);
+    QString sql = "SELECT "
+                    "m_name,"
+                    "number "
+                "FROM "
+                    "( SELECT DISTINCT m_id, m_name FROM place WHERE DATE = :date ) AS p "
+                    "JOIN ( SELECT m_id, count( m_id ) AS number FROM ticket GROUP BY m_id ) AS t ON p.m_id = t.m_id";
+    movieQuery.prepare(sql);
+    movieQuery.bindValue(":date", date.toString("yyyy-MM-dd"));
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+    QList<QStringList> list;
+    while (movieQuery.next()) {
+        QString name = movieQuery.value(0).toString();
+        QString number = movieQuery.value(1).toString();
+        QStringList lt;
+        lt<<name<<number;
+        list.push_back(lt);
+    }
+    return list;
+}
+
+// 查询指定时段电影票销售情况
+QList<QStringList> DBHelper::querySalesByPeriod(int period)
+{
+    QString startTime;
+    QString endTime;
+    switch (period) {
+    case Place::Morning:
+        startTime = "08:00";
+        endTime = "11:59";
+        break;
+    case Place::Afternoon:
+        startTime = "12:00";
+        endTime = "17:59";
+        break;
+    case Place::Evening:
+        startTime = "18:00";
+        endTime = "23:59";
+        break;
+    default:
+        break;
+    }
+    QSqlQuery movieQuery(m_db);
+    QString sql = "SELECT "
+                    "p.m_name, "
+                    "number "
+                "FROM "
+                    "( SELECT DISTINCT m_id, m_name FROM place WHERE start_time BETWEEN :start_time AND :end_time ) AS p"
+                    " JOIN ( SELECT m_id, count( m_id ) AS number FROM ticket GROUP BY m_id ) AS t ON p.m_id = t.m_id";
+    movieQuery.prepare(sql);
+    movieQuery.bindValue(":start_time", startTime);
+    movieQuery.bindValue(":end_time", endTime);
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+    QList<QStringList> list;
+    while (movieQuery.next()) {
+        QString name = movieQuery.value(0).toString();
+        QString number = movieQuery.value(1).toString();
+        QStringList lt;
+        lt<<name<<number;
+        list.push_back(lt);
+    }
+    return list;
+}
+
+// 查询指定电影销售情况
+QList<QStringList> DBHelper::querySalesById(int id)
+{
+    QSqlQuery movieQuery(m_db);
+    QString sql = "SELECT m_name, count(m_id) FROM ticket WHERE m_id = :m_id GROUP BY m_id";
+    movieQuery.prepare(sql);
+    movieQuery.bindValue(":m_id", id);
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+    QList<QStringList> list;
+    while (movieQuery.next()) {
+        QString name = movieQuery.value(0).toString();
+        QString number = movieQuery.value(1).toString();
+        QStringList lt;
+        lt<<name<<number;
+        list.push_back(lt);
+    }
+    return list;
+}
+
+// 查询指定类型电影销售情况
+QList<QStringList> DBHelper::querySalesByType(int type)
+{
+    QString key;
+    switch (type) {
+    case Movie::Action:
+        key = "动作";
+        break;
+    case Movie::Plot:
+        key = "剧情";
+        break;
+    case Movie::Science:
+        key = "科幻";
+        break;
+    case Movie::Comedy:
+        key = "喜剧";
+        break;
+    default:
+        break;
+    }
+
+    QSqlQuery movieQuery(m_db);
+    QString sql = "SELECT "
+                    "t.m_name, "
+                    "number "
+                "FROM "
+                    "( SELECT m_id FROM movie WHERE type LIKE :type ) AS m "
+                    "JOIN ( SELECT m_id, m_name, count( m_id ) AS number FROM ticket GROUP BY m_id ) AS t ON m.m_id = t.m_id";
+    movieQuery.prepare(sql);
+    QString typeStr = "%" + key + "%";
+    movieQuery.bindValue(":type", typeStr);
+    if(!movieQuery.exec()) {
+        qDebug() << __FILE__ << __LINE__ << "query error: " << movieQuery.lastError();
+    }
+    else {
+        qDebug() << __FILE__ << __LINE__ << "query success!";
+    }
+
+    QList<QStringList> list;
+    while (movieQuery.next()) {
+        QString name = movieQuery.value(0).toString();
+        QString number = movieQuery.value(1).toString();
+        QStringList lt;
+        lt<<name<<number;
+        list.push_back(lt);
+    }
+    return list;
 }
 
 // 关闭数据库

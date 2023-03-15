@@ -30,6 +30,18 @@ public:
     void updatePlace(Place &place);
     // 插入电影票
     void insertTicket(Ticket &ticket);
+    // 查询所有电影票的数量
+    int queryTicketNumber();
+    // 查询所有场次日期
+    QList<QDate> queryPlaceForDate();
+    // 查询指定日期电影售卖情况
+    QList<QStringList> querySalesByDate(QDate date);
+    // 查询指定时段电影售卖情况
+    QList<QStringList> querySalesByPeriod(int period);
+    // 查询指定电影的售卖情况
+    QList<QStringList> querySalesById(int id);
+    // 查询指定类型电影售卖情况
+    QList<QStringList> querySalesByType(int type);
     // 关闭数据库
     void close();
 

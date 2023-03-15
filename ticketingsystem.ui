@@ -111,7 +111,7 @@
     <widget class="QWidget" name="widget_sys_body" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,8">
       <property name="spacing">
-       <number>0</number>
+       <number>20</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -206,7 +206,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget_content">
         <property name="currentIndex">
-         <number>1</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="page_hitFilm">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -293,7 +293,26 @@
         </widget>
         <widget class="QWidget" name="page_filmManager"/>
         <widget class="QWidget" name="page_userManager"/>
-        <widget class="QWidget" name="page_sales"/>
+        <widget class="QWidget" name="page_sales">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>销售情况</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="SaleStatus" name="widget_sales" native="true"/>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -312,6 +331,12 @@
    <class>PersonalInfo</class>
    <extends>QWidget</extends>
    <header location="global">personalinfo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SaleStatus</class>
+   <extends>QWidget</extends>
+   <header location="global">salestatus.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

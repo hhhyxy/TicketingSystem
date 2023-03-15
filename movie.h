@@ -8,19 +8,29 @@
 class Movie
 {
 public:
-//    enum MovieType {
-//        Action,         // 动作片
-//        Comedy,         // 喜剧
-//        Horror,         // 恐怖片
-//        Love,           // 爱情片
-//        Documentary,    // 纪录片
-//        History,        // 历史片
-//        War,            // 战争片
-//        Science,        // 科幻片
-//        Crime,          // 犯罪片
-//        Cartoon,        // 动画片
-//        Music           // 音乐片
-//    };
+    enum MovieType {
+        Action,         // 动作片
+        Plot,           // 剧情
+        Science,        // 科幻片
+        Comedy,         // 喜剧
+        Adventure,      // 冒险
+        Exercise,       // 运动
+        SameSex,        // 同性
+        SongAndDance,   // 歌舞
+        Horror,         // 恐怖片
+        Love,           // 爱情片
+        Documentary,    // 纪录片
+        History,        // 历史片
+        War,            // 战争片
+        Crime,          // 犯罪片
+        Cartoon,        // 动画片
+        Music,          // 音乐片
+        Swordsman,      // 武侠
+        Fantasy,        // 奇幻
+        Costume,        // 古装
+        Family,         // 家庭
+        Suspense        // 悬疑
+    };
     Movie ();
     Movie (int id, QString name, QString picture);
     Movie (int id, QString name, QString introduce, QString picture, QString directors, QString actors, QString duration, QString type);
@@ -62,8 +72,13 @@ private:
 class Place
 {
 public:
+    enum Period {
+        Morning,
+        Afternoon,
+        Evening
+    };
     Place();
-    Place(int id, QString name, int movieId, QDate date, int price, QTime startTime, QTime endTime, int maxRow, int maxCol, QBitArray seat);
+    Place(int id, QString name, int m_id, QString movieName, QDate date, int price, QTime startTime, QTime endTime, int maxRow, int maxCol, QBitArray seat);
     int id() const;
 
     QString name() const;
@@ -72,7 +87,7 @@ public:
     QBitArray seat() const;
     void setSeat(const QBitArray &newSeat);
 
-    int movieId() const;
+    QString movieName() const;
 
     QDate getDate() const;
     void setDate(const QDate &newDate);
@@ -92,10 +107,14 @@ public:
     int maxCol() const;
     void setMaxCol(int newMaxCol);
 
+    int movieId() const;
+    void setMovieId(int newMovieId);
+
 private:
     int m_id;               // 场次id
     QString m_name;         // 场地名称
-    int m_movieId;          // 电影id
+    int m_movieId;               // 电影id
+    QString m_movieName;          // 电影名称
     QDate m_date;           // 日期
     int m_price;            // 价格
     QTime m_startTime;      // 开场时间
@@ -110,8 +129,8 @@ class Ticket
 {
 public:
     Ticket();
-    Ticket(int userId, int movieId, int placeId, QTime time, int row, int col);
-    Ticket(int id, int userId, int movieId, int placeId, QTime time, int row, int col);
+    Ticket(int userId, int movieId, QString movieName, int placeId, int row, int col, QDateTime time = QDateTime::currentDateTime());
+    Ticket(int id, int userId, int movieId, QString movieName, int placeId, int row, int col, QDateTime time = QDateTime::currentDateTime());
     int userId() const;
     void setUserId(int newUserId);
 
@@ -121,8 +140,8 @@ public:
     int placeId() const;
     void setPlaceId(int newPlaceId);
 
-    QTime time() const;
-    void setTime(const QTime &newTime);
+    QDateTime time() const;
+    void setTime(const QDateTime &newTime);
 
     int row() const;
     void setRow(int newRow);
@@ -132,12 +151,16 @@ public:
 
     int id() const;
 
+    QString movieName() const;
+    void setMovieName(const QString &newMovieName);
+
 private:
     int m_id;       // 电影票id
     int m_userId;   // 用户id
     int m_movieId;  // 电影id
+    QString m_movieName;    // 电影名称
     int m_placeId;  // 场次id
-    QTime m_time;   // 购票时间
+    QDateTime m_time;   // 购票时间
     int m_row;      // 行
     int m_col;      // 列
 };

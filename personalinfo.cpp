@@ -21,7 +21,7 @@ void PersonalInfo::showUserInfo(User user)
     ui->lineEdit_pwd->setText(user.pwd());
     ui->label_grade->setText(QString::number(user.grade()));
     ui->label_score->setText(QString::number(user.score()));
-    ui->label_registerTime->setText(user.joinTime().toString());
+    ui->label_registerTime->setText(user.joinTime().toString("yyyy-MM-dd hh:mm:ss"));
     switch (user.sex()) {
     case User::Man:
         ui->radioButton_man->click();

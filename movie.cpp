@@ -104,10 +104,11 @@ Place::Place()
 
 }
 
-Place::Place(int id, QString name, int movieId, QDate date, int price, QTime startTime, QTime endTime, int maxRow, int maxCol, QBitArray seat)
+Place::Place(int id, QString name, int movieId, QString movieName, QDate date, int price, QTime startTime, QTime endTime, int maxRow, int maxCol, QBitArray seat)
 {
     m_id = id;
     m_name = name;
+    m_movieName = movieName;
     m_movieId = movieId;
     m_date = date;
     m_price = price;
@@ -143,9 +144,9 @@ void Place::setSeat(const QBitArray &newSeat)
     m_seat = newSeat;
 }
 
-int Place::movieId() const
+QString Place::movieName() const
 {
-    return m_movieId;
+    return m_movieName;
 }
 
 QDate Place::getDate() const
@@ -208,26 +209,38 @@ void Place::setMaxCol(int newMaxCol)
     m_maxCol = newMaxCol;
 }
 
+int Place::movieId() const
+{
+    return m_movieId;
+}
+
+void Place::setMovieId(int newMovieId)
+{
+    m_movieId = newMovieId;
+}
+
 Ticket::Ticket()
 {
 
 }
 
-Ticket::Ticket(int userId, int movieId, int placeId, QTime time, int row, int col)
+Ticket::Ticket(int userId, int movieId, QString movieName, int placeId, int row, int col, QDateTime time)
 {
     m_userId = userId;
     m_movieId = movieId;
+    m_movieName = movieName;
     m_placeId = placeId;
     m_time = time;
     m_row = row;
     m_col = col;
 }
 
-Ticket::Ticket(int id, int userId, int movieId, int placeId, QTime time, int row, int col)
+Ticket::Ticket(int id, int userId, int movieId, QString movieName, int placeId, int row, int col, QDateTime time)
 {
     m_id = id;
     m_userId = userId;
     m_movieId = movieId;
+    m_movieName = movieName;
     m_placeId = placeId;
     m_time = time;
     m_row = row;
@@ -264,12 +277,12 @@ void Ticket::setPlaceId(int newPlaceId)
     m_placeId = newPlaceId;
 }
 
-QTime Ticket::time() const
+QDateTime Ticket::time() const
 {
     return m_time;
 }
 
-void Ticket::setTime(const QTime &newTime)
+void Ticket::setTime(const QDateTime &newTime)
 {
     m_time = newTime;
 }
@@ -297,4 +310,14 @@ void Ticket::setCol(int newCol)
 int Ticket::id() const
 {
     return m_id;
+}
+
+QString Ticket::movieName() const
+{
+    return m_movieName;
+}
+
+void Ticket::setMovieName(const QString &newMovieName)
+{
+    m_movieName = newMovieName;
 }

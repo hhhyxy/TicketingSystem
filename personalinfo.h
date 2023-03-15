@@ -15,6 +15,7 @@ class PersonalInfo : public QWidget
 public:
     explicit PersonalInfo(QWidget *parent = nullptr);
     ~PersonalInfo();
+    // 显示用户信息
     void showUserInfo(User user);
 
 private slots:

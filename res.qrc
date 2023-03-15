@@ -6,6 +6,7 @@
         <file>image/max2normal .svg</file>
         <file>image/TicketingSytem.svg</file>
         <file>image/left.svg</file>
+        <file>image/arowDown.svg</file>
     </qresource>
     <qresource prefix="/style">
         <file>style.css</file>
