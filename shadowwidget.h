@@ -41,7 +41,7 @@ protected:
 
     /*
      * @function: 实现两个窗口的平移切换动画
-     * @param: parent 两个窗口的父窗口，一般是QStackWidget,或
+     * @param: parent 两个窗口的父窗口，一般是QStackWidget
      * @param: leftWidget 左窗口
      * @param: rigjtWidget 右窗口
      * @param: direction 平移的方向

@@ -174,7 +174,7 @@ void DBHelper::insertUser(User user)
 {
     QSqlQuery movieQuery(m_db);
     movieQuery.prepare("INSERT INTO user (u_time, u_name, password, grade, score, mail, phone, sex, age, birthday) VALUES (:u_time, :u_name, :password, :grade, :score, :mail, :phone, :sex, :age, :birthday)");
-    movieQuery.bindValue(":u_time", user.joinTime());
+    movieQuery.bindValue(":u_time", user.joinTime().toString("yyyy-MM-dd hh:mm:ss"));
     movieQuery.bindValue(":u_name", user.name());
     movieQuery.bindValue(":password", user.pwd());
     movieQuery.bindValue(":grade", user.grade());
